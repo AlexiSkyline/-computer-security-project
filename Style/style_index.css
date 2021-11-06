@@ -86,11 +86,19 @@ label {
     padding: 5px;
     color: rgb(49, 48, 48);
 }
+#option_algorithm.error {
+    border-color: #e67b7b;
+    border-width: 2px;
+}
 .container__text-areas {
     margin-top: 25px;
 }
 #text_entry {
     margin-right: 20px;
+}
+#text_entry.error {
+    border-color: #e67b7b;
+    border-width: 2px;
 }
 textarea {
     border-radius: 20px;
@@ -113,6 +121,10 @@ textarea {
 }
 .encrypt {
     margin-right: 10px;
+}
+.button.save.disable {
+    cursor: not-allowed;
+    background-color: #ddd;
 }
 
 /* Todo: Option Document Section */
@@ -179,4 +191,13 @@ textarea {
 }
 .option__document .container__buttons {
     margin-bottom: 100px;
+}
+.message__error {
+    text-align: center;
+    margin-top: 30px;
+    background-color: #e67b7b;
+    color: white;
+    border-radius: 10px;
+    padding: 10px 0;
+    width: 100%;
 }
