@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Inicio</title>
+        <link rel="stylesheet" href="Style/style_index.css">
+    </head> 
+    <body>
+        <header>
+            <div class="container__navbar">
+                <div class="container__info">
+                    <img src="img/login-image.jpg" alt="profile_picture">
+                    <p class="user__name">Nombre del usuario</p>
+                </div>  <!--*.container__info-->
+                <a href="#">Cerrar Sesión</a>
+            </div> <!--*.container__navbar-->
+        </header> <!--*.header-->
+        <main class="container_main">
+            <h1 class="title_page">Encriptacion de Textos y Archivos.</h1>
+            <form>
+                <div class="container__type-encryption">
+                    <label>Elija la opción a Encriptar: </label>
+                    <input type="radio" name="option" id="texto">
+                    <label for="texto">Textos</label>
+                    <input type="radio" name="option" id="archivo">
+                    <label for="archivo">Archivos</label>
+                </div> <!--*.container__type-encryption-->
+                <div class="option__text">
+                    <div class="container_options">
+                        <label for="option_algorithm">Elija el algoritmo:</label>
+                        <select name="option_algorithm" id="option_algorithm" required>
+                            <option value="">-- Seleccione --</option>
+                            <option value="opcion 1">opcion 1</option>
+                            <option value="opcion 2">opcion 2</option>
+                        </select> <!--*.select-->
+                    </div> <!--*.container_options-->
+                    <div class="container__text-areas">
+                        <textarea name="entry" id="text_entry" cols="40" rows="12" placeholder="Ingrese el texto a encriptar...." style="resize: none;" required></textarea>
+                        <textarea name="output" id="text_output" cols="40" rows="12" placeholder="Resultado de la encriptación" readonly style="resize: none;"></textarea>
+                    </div> <!--*.container__text-areas-->
+                    <div class="container__buttons">
+                        <input type="submit" value="Encriptar" class="button encrypt">
+                        <input type="submit" value="Guardar" class="button save">
+                    </div> <!--*.buttons-->
+                </div> <!--*.option text-->
+                <div class="option__document">
+                    <div class="drop-area">
+                        <h2>Arrastra y suelta imágenes</h2>
+                        <span>O</span>
+                        <button>Seleciona tus archivos</button>
+                        <input type="file" name="" id="input-file" hidden multiple>
+                    </div>
+                    <div id="preview"></div>
+                    <div class="container__buttons">
+                        <input type="submit" value="Encriptar" class="button encrypt">
+                        <input type="submit" value="Guardar" class="button save">
+                    </div> <!--*.buttons-->
+                </div><!--*.option__document-->
+            </form> <!--*.form-->
+            <img src="img/SAIA-Archivo-y-almacenamiento-de-documentos.png" alt="img_Archivo_y_almacenamiento_de_documentos" class="banner">
+        </main> <!--*.main-->
+        <script src="js/actions/componentes.js" type="module"></script>
+    </body> <!--*.body-->
+</html>

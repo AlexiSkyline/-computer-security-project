@@ -1,0 +1,182 @@
+*{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+body{
+    font-family: 'Poppins', sans-serif;
+    background-color: #f7f7f7;
+}
+
+/* Todo: Header Section */
+.container__navbar {
+    background-color: #1E98F2;
+    display: flex;
+    height: 10vh;
+    justify-content: space-between;
+    padding: 0 50px;
+}
+.container__info {
+    display: flex;
+    align-items: center;
+}
+.container__info img {
+    height: 50px;
+    padding-right: 30px;
+}
+.user__name {
+    color: #f7f7f7;
+}
+.container__navbar a {
+    align-self: center;
+    color: #f7f7f7;
+    text-decoration: none;
+    text-align: center;
+    padding: 20px 15px;
+    transition: all 0.5s ease;   
+}
+.container__navbar a:hover {
+    background-color: #115686;
+}
+
+/* Todo: Main Section */
+.container_main {
+    max-width: 80%; 
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.title_page {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 28px;
+}
+form {
+    margin-top: 30px;
+}
+.container_main img {
+    max-width: 100%;
+}
+input[ type='radio' ] {
+    margin-left: 10px;
+}
+label {
+    margin-left: 5px;
+    font-family: sans-serif;
+}
+.container__type-encryption {
+    text-align: center;    
+}
+
+/* Todo: Option Text Section */
+.option__text {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 30px;
+    display: none;
+}
+#option_algorithm {
+    border-color: rgb(116, 112, 112);
+    border-radius: 10px;
+    font-size: 14px;
+    padding: 5px;
+    color: rgb(49, 48, 48);
+}
+.container__text-areas {
+    margin-top: 25px;
+}
+#text_entry {
+    margin-right: 20px;
+}
+textarea {
+    border-radius: 20px;
+    padding: 20px;
+}
+.container__buttons {
+    margin-top: 30px;
+}
+.button {
+    background-color: #1E98F2;
+    border: none;
+    border-radius: 10px;
+    color: #f7f7f7;
+    padding: 10px 15px;
+    transition: all 0.5s ease-in;
+    font-size: 17px;
+}
+.button:hover {
+    background-color: #115686;
+}
+.encrypt {
+    margin-right: 10px;
+}
+
+/* Todo: Option Document Section */
+.option__document {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    display: none;
+    align-items: center;
+}
+.drop-area {
+    border: 5px dashed #b8d4fe;
+    height: 250px;
+    width: 500px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 50px;
+}
+.drop-area.active {
+    background-color: #b8d4fe;
+    color: black;
+    border: 2px dashed #618ac9;
+}
+.drop-area h2 {
+    font-size: 20px;
+    font-weight: 500;
+    color: black;
+}
+.drop-area span {
+    font-size: 18px;
+    font-weight: 500;
+    color: black;
+}
+.drop-area button {
+    padding: 10px 25px;
+    font-size: 14px;
+    border: 0;
+    outline: none;
+    background-color: #1E98F2;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 20px;
+}
+.file-container {
+    display: flex; 
+    align-items: center; 
+    gap: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: solid 1px #ddd;
+}
+#preview {
+    margin-top: 30px;
+}
+.status-text {
+    color: #52ad5a;
+}
+.failure {
+    color: #ff0000;
+}
+.option__document .container__buttons {
+    margin-bottom: 100px;
+}
