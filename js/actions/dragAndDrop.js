@@ -1,24 +1,29 @@
 export const dragAndDrop = () => {
+    const optionDocument = document.querySelector( '.option__document' );
     const dropArea = document.querySelector( '.drop-area' );
     const dragText = dropArea.querySelector( 'h2' );
     const button = dropArea.querySelector( 'button' );
+    const encryptButton = optionDocument.querySelector( '.button.encrypt' )
     const input = dropArea.querySelector( '#input-file' );
     let files;
 
-    button.addEventListener( 'click', ( e ) => {
+    button.addEventListener( 'click', (e) => {
+        e.preventDefault();
         input.click();
     });
+    
+    encryptButton.addEventListener( 'click', validateFormOptionDocument );
 
     dropArea.addEventListener( 'dragover', (e) => {
         e.preventDefault();
+        dropArea.classList.remove( 'error' );
         dropArea.classList.add( 'active' );
         dragText.textContent = 'Suelta para subir los archivos';
     });
 
-    dropArea.addEventListener( 'dragleave', (e) => {
+    document.addEventListener( 'dragleave', (e) => {
         e.preventDefault();
-        dropArea.classList.remove( 'active' );
-        dragText.textContent = 'Arrastra y suelta imágenes';
+        dropArea.classList.add( 'error' );
     });
 
     dropArea.addEventListener( 'drop', (e) => {
@@ -26,10 +31,16 @@ export const dragAndDrop = () => {
         files = e.dataTransfer.files;
         showFiles( files );
         dropArea.classList.remove( 'active' );
+        dropArea.classList.remove( 'error' );
         dragText.textContent = 'Arrastra y suelta imágenes';
     });
 
-    button.addEventListener( 'change', ( e ) => { 
+    input.addEventListener( 'change', (e) => {
+        files = e.target.files;
+        showFiles( files );
+    })
+
+    button.addEventListener( 'change', () => { 
         files = this.files;
         dropArea.classList.add( 'active' );
         showFiles( files );
@@ -50,34 +61,56 @@ export const dragAndDrop = () => {
         const docType = file.type;
         const validExtensions = [ "image/jpeg", "image/jpg", "image/png", "image/gif" ];
         
-        console.log( docType )
-        if( validExtensions.includes( docType ) ) {
-            const fileReader = new FileReader();
-            const id = `file.${ Math.random().toString(32).substring(7) }`; 
+        const fileReader = new FileReader();
+        const id = `file.${ Math.random().toString(32).substring(7) }`; 
 
-            fileReader.addEventListener( 'load', ( e ) => {
-                const fileUrl = fileReader.result;
-                const image = `
-                    <div id="${id}" class="file-container">
-                        <img src="${ fileUrl }" alt="${ file.name }" width="50"/>
-                        <div class="status">
-                            <span>${ file.name }</span>
-                            <span class="status-text">
-                                Loading ...
-                            </span>
-                        </div>
+        fileReader.addEventListener( 'load', ( e ) => {
+            const fileUrl = fileReader.result;
+            const image = `
+                <div id="${id}" class="file-container">
+                    <img src="${ validExtensions.includes( docType ) ? fileUrl : 'https://img.icons8.com/color/96/000000/check-file.png' }" width="30"/>
+                    <div class="status">
+                        <span>${ file.name }</span>
+                        <span class="status-text">
+                            Loading ...
+                        </span>
                     </div>
-                `;
+                </div>
+            `;
 
-                const html = document.querySelector( '#preview' ).innerHTML;
-                document.querySelector( '#preview' ).innerHTML = image + html;
-            });
+            const html = document.querySelector( '#preview' ).innerHTML;
+            document.querySelector( '#preview' ).innerHTML = image + html;
+        });
 
-            fileReader.readAsDataURL( file );
+        fileReader.readAsDataURL( file );   
+    }
+
+    function validateFormOptionDocument( e ) {
+        e.preventDefault();
+        
+        if( files === undefined ) {
+            showMessageError();
+            return
+        }
+
+        encryptFiles( files );
+    }
+
+    function showMessageError() {
+        const messageIsActive = optionDocument.querySelector( '.message__error' );
+
+        if( !messageIsActive ) {
+            const divError = document.createElement( 'div' );
+            divError.classList.add( 'message__error' );
+            divError.innerHTML = 'No es encontro ningun archivo';
             
-        } else {
-            alert("No es un archivo valido");
+            optionDocument.insertBefore( divError, optionDocument.querySelector( '.container__buttons' ) );
+
+            setTimeout(() => divError.remove(), 3000);
         }
     }
 
+    function encryptFiles( files ) {
+        console.log( files )
+    }
 }

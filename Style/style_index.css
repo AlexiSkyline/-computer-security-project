@@ -147,9 +147,12 @@ textarea {
     border-radius: 50px;
 }
 .drop-area.active {
-    background-color: #b8d4fe;
+    background-color: #cedaeb;
     color: black;
-    border: 2px dashed #618ac9;
+    border: 5px dashed #52ad5a;
+}
+.drop-area.error {
+    border-color: #e67b7b;
 }
 .drop-area h2 {
     font-size: 20px;
