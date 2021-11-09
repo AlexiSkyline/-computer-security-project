@@ -1,10 +1,10 @@
 export const dragAndDrop = () => {
     const optionDocument = document.querySelector( '.option__document' );
-    const dropArea = document.querySelector( '.drop-area' );
-    const dragText = dropArea.querySelector( 'h2' );
-    const button = dropArea.querySelector( 'button' );
-    const encryptButton = optionDocument.querySelector( '.button.encrypt' )
-    const input = dropArea.querySelector( '#input-file' );
+    const dropArea       = document.querySelector( '.drop-area' );
+    const dragText       = dropArea.querySelector( 'h2' );
+    const button         = dropArea.querySelector( 'button' );
+    const encryptButton  = optionDocument.querySelector( '.button.encrypt' )
+    const input          = dropArea.querySelector( '#input-file' );
     let files;
 
     button.addEventListener( 'click', (e) => {

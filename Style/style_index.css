@@ -92,6 +92,10 @@ label {
 }
 .container__text-areas {
     margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 #text_entry {
     margin-right: 20px;
@@ -203,4 +207,9 @@ textarea {
     border-radius: 10px;
     padding: 10px 0;
     width: 100%;
+}
+@media ( max-width: 990px ) {
+    #text_output {
+        margin-top: 20px;
+    }
 }

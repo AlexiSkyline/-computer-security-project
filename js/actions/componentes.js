@@ -62,7 +62,7 @@ import { dragAndDrop } from "./dragAndDrop.js";
 
         textEntry.classList.remove( 'error' );
         optionAlgorithm.classList.remove( 'error' );
-        encryptText( 'texto' );
+        encryptText( textEntry.value );
     }
 
     function showMessageError( reference, menssage ) {
@@ -81,8 +81,21 @@ import { dragAndDrop } from "./dragAndDrop.js";
         }
     }
 
-    function encryptText ( text ) {
-        console.log( text );
+    async function encryptText ( text ) {
+        const textOutput = document.querySelector( '#text_output' );
+        const digestHex = await digestMessage(text);
+        textOutput.value = `${digestHex}`;
+    
+        buttonSave.disabled = false;
+        buttonSave.classList.remove( 'disable' );
+    }
+
+    async function digestMessage( text ) {
+        const msgUint8 = new TextEncoder().encode(text);                           // encode as (utf-8) Uint8Array
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);           // hash the message
+        const hashArray = Array.from(new Uint8Array(hashBuffer));                     // convert buffer to byte array
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
+        return hashHex;
     }
 })();
 
