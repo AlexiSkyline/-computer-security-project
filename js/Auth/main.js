@@ -12,14 +12,16 @@
 		const inputEmail = document.querySelector( '.email' );
 		const inputPassword = document.querySelector( '.password' );
 
-		if( inputPassword.value.trim() === '' || inputPassword.value.length === 0 ) {
+		if ( inputEmail.value.trim() === ''  ) {
 			showMessage( 'Todos los campos son obligatorios.' );
-		}
-		if( !er.test( inputEmail.value ) ) {
+		} else if( !er.test( inputEmail.value ) ) {
 			showMessage( 'Correo invalido.' );
 			return;
 		} 
-		if( inputPassword.value.trim().length < 6 ) {
+
+		if ( inputPassword.value.trim() === '' ) {
+			showMessage( 'Todos los campos son obligatorios.' );
+		} else if ( inputPassword.value.trim().length < 6 ) {
 			showMessage( 'Contraseña invalida, minimo 6 de caracteres.' );
 			return;
 		} 
