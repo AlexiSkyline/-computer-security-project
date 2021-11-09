@@ -8,14 +8,21 @@
 
 	const validateInput = ( e ) => {
 		e.preventDefault();
-
+		const inputName = document.querySelector( '.name' );
 		const inputEmail = document.querySelector( '.email' );
 		const inputPassword = document.querySelector( '.password' );
-
-		if ( inputEmail.value.trim() === '' || inputPassword.value.trim() === '' ) {
+		const inputRol = document.querySelector( 'input[name="rol"]:checked' );
+       
+		if ( inputName.value.trim() === '' || inputEmail.value.trim() === '' || inputPassword.value.trim() === ''
+             || inputPassword.value.trim() === '' || inputRol.value === '' ) {
 			showMessage( 'Todos los campos son obligatorios.' );
 		} else if( !er.test( inputEmail.value ) ) {
 			showMessage( 'Correo invalido.' );
+			return;
+		} 
+
+        if ( inputName.value.trim().length < 4 ) {
+			showMessage( 'El nombre de usuario debe ser de minimo 4 de caracteres.' );
 			return;
 		} 
 
