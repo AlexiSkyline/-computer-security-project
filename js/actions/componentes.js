@@ -1,3 +1,4 @@
+import { crypto } from "../classes/index.js";
 import { dragAndDrop } from "./dragAndDrop.js";
 
 ( function (){
@@ -7,6 +8,7 @@ import { dragAndDrop } from "./dragAndDrop.js";
     const optionAlgorithm = document.querySelector( '#option_algorithm' );
     let optionText;
     let buttonSave;
+    let textOutput;
 
     document.addEventListener( 'DOMContentLoaded', () => {
         inputOpcions.forEach( input => {
@@ -34,7 +36,6 @@ import { dragAndDrop } from "./dragAndDrop.js";
             dragAndDrop();
 
             encryptButton = optionDocument.querySelector( '.button.encrypt' )
-            // encryptButton.addEventListener( 'click', validateFormOptionText );
         }
     }
     
@@ -47,25 +48,27 @@ import { dragAndDrop } from "./dragAndDrop.js";
     function validateFormOptionText ( e ) {
         e.preventDefault();
         const textEntry = document.querySelector( '#text_entry' );
+        textOutput      = optionText.querySelector( '#text_output' )
 
         if( optionAlgorithm.value === '' ) {
             optionAlgorithm.classList.add( 'error' );
             setTimeout( () => optionAlgorithm.classList.remove( 'error' ), 2000 );
-            showMessageError( optionText, 'Todos los campos son obligatorios' );
+            showMessageError( 'Todos los campos son obligatorios' );
             return;
         } else if( textEntry.value.trim() === '' ) {
             textEntry.classList.add( 'error' );
             setTimeout( () => textEntry.classList.remove( 'error' ), 2000 );
-            showMessageError( optionText, 'Todos los campos son obligatorios' );
+            textOutput.value = '';
+            showMessageError( 'Todos los campos son obligatorios' );
             return;
         } 
 
         textEntry.classList.remove( 'error' );
         optionAlgorithm.classList.remove( 'error' );
-        encryptText( textEntry.value );
+        showText( textEntry.value,  optionAlgorithm.value );
     }
 
-    function showMessageError( reference, menssage ) {
+    function showMessageError( menssage ) {
         const messageIsActive = document.querySelector( '.message__error' );
 
         if( !messageIsActive ) {
@@ -73,7 +76,7 @@ import { dragAndDrop } from "./dragAndDrop.js";
             divError.classList.add( 'message__error' );
             divError.innerHTML = menssage;
             
-            reference.insertBefore( divError, reference.querySelector( 'container__text-areas' ) );
+            optionText.insertBefore( divError, optionText.querySelector( 'container__text-areas' ) );
 
             setTimeout(() => {
                 divError.remove();
@@ -81,21 +84,18 @@ import { dragAndDrop } from "./dragAndDrop.js";
         }
     }
 
-    async function encryptText ( text ) {
-        const textOutput = document.querySelector( '#text_output' );
-        const digestHex = await digestMessage(text);
-        textOutput.value = `${digestHex}`;
+    function showText ( text, option ) {
+        const newText = crypto.textEncryption( text, option );
+
+        if( !newText ) {
+            showMessageError( 'Hubo un error al encriptar el texto' );
+        }
+
+        textOutput.value = `${newText}`;
     
         buttonSave.disabled = false;
         buttonSave.classList.remove( 'disable' );
     }
 
-    async function digestMessage( text ) {
-        const msgUint8 = new TextEncoder().encode(text);                           // encode as (utf-8) Uint8Array
-        const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);           // hash the message
-        const hashArray = Array.from(new Uint8Array(hashBuffer));                     // convert buffer to byte array
-        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
-        return hashHex;
-    }
 })();
 
