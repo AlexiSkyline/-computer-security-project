@@ -1,10 +1,13 @@
+import { crypto } from "../classes/index.js";
+
 export const dragAndDrop = () => {
-    const optionDocument = document.querySelector( '.option__document' );
-    const dropArea       = document.querySelector( '.drop-area' );
-    const dragText       = dropArea.querySelector( 'h2' );
-    const button         = dropArea.querySelector( 'button' );
-    const encryptButton  = optionDocument.querySelector( '.button.encrypt' )
-    const input          = dropArea.querySelector( '#input-file' );
+    const optionDocument  = document.querySelector( '.option__document' );
+    const dropArea        = document.querySelector( '.drop-area' );
+    const dragText        = dropArea.querySelector( 'h2' );
+    const button          = dropArea.querySelector( 'button' );
+    const encryptButton   = optionDocument.querySelector( '.button.encrypt' )
+    const input           = dropArea.querySelector( '#input-file' );
+    const optionAlgorithm = document.querySelector( '#option_algorithm' );
     let files;
 
     button.addEventListener( 'click', (e) => {
@@ -88,21 +91,28 @@ export const dragAndDrop = () => {
     function validateFormOptionDocument( e ) {
         e.preventDefault();
         
-        if( files === undefined ) {
-            showMessageError();
+        if( optionAlgorithm.value === '' ) {
+            optionAlgorithm.classList.add( 'error' );
+            setTimeout( () => optionAlgorithm.classList.remove( 'error' ), 2000 );
+            showMessageError( 'Todos los campos son obligatorios' );
+            return;
+        } else if( files === undefined ) {
+            dropArea.classList.add( 'error' );
+            setTimeout( () => dropArea.classList.remove( 'error' ), 2000 );
+            showMessageError( 'No es encontro ningun archivo' );
             return
         }
 
-        encryptFiles( files );
+        convertBase64( files );
     }
 
-    function showMessageError() {
+    function showMessageError( message ) {
         const messageIsActive = optionDocument.querySelector( '.message__error' );
 
         if( !messageIsActive ) {
             const divError = document.createElement( 'div' );
             divError.classList.add( 'message__error' );
-            divError.innerHTML = 'No es encontro ningun archivo';
+            divError.innerHTML = message;
             
             optionDocument.insertBefore( divError, optionDocument.querySelector( '.container__buttons' ) );
 
@@ -110,7 +120,30 @@ export const dragAndDrop = () => {
         }
     }
 
-    function encryptFiles( files ) {
-        console.log( files )
+    function convertBase64 ( files, option ) {
+        Array.from( files ).forEach( file => {
+            var render = new FileReader();
+            render.readAsDataURL( file );
+            render.onload = function() {
+                var arrayAuxliliar = [];
+                var base64 = render.result;
+
+                arrayAuxliliar = base64.split( ',' );
+
+                encryptBase64( arrayAuxliliar[1] );
+            }
+        });
     }
+
+    function encryptBase64( textBase64 ) {
+        const newText    = crypto.textEncryption( textBase64, optionAlgorithm.value );
+        const textOutput = optionDocument.querySelector( '#text_output' );
+
+        if( !textBase64 ) {
+            showMessageError( 'Hubo un Error al encriptar el Archivo' );
+        }
+
+        textOutput.value = `${newText}`;
+    }    
+
 }

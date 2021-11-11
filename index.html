@@ -28,15 +28,15 @@
                     <input type="radio" name="option" id="archivo">
                     <label for="archivo">Archivos</label>
                 </div> <!--*.container__type-encryption-->
+                <div class="container_options">
+                    <label for="option_algorithm">Elija el algoritmo:</label>
+                    <select name="option_algorithm" id="option_algorithm" required>
+                        <option value="">-- Seleccione --</option>
+                        <option value="TripleDES">TripleDES</option>
+                        <option value="Rabbit">Rabbit</option>
+                    </select> <!--*.select-->
+                </div> <!--*.container_options-->
                 <div class="option__text">
-                    <div class="container_options">
-                        <label for="option_algorithm">Elija el algoritmo:</label>
-                        <select name="option_algorithm" id="option_algorithm" required>
-                            <option value="">-- Seleccione --</option>
-                            <option value="TripleDES">TripleDES</option>
-                            <option value="Rabbit">Rabbit</option>
-                        </select> <!--*.select-->
-                    </div> <!--*.container_options-->
                     <div class="container__text-areas">
                         <textarea name="entry" id="text_entry" cols="40" rows="12" placeholder="Ingrese el texto a encriptar...." style="resize: none;" required></textarea>
                         <textarea name="output" id="text_output" cols="40" rows="12" placeholder="Resultado de la encriptación" readonly style="resize: none;"></textarea>
@@ -47,11 +47,14 @@
                     </div> <!--*.buttons-->
                 </div> <!--*.option text-->
                 <div class="option__document">
-                    <div class="drop-area">
-                        <h2>Arrastra y suelta imágenes</h2>
-                        <span>O</span>
-                        <button>Seleciona tus archivos</button>
-                        <input type="file" name="" id="input-file" hidden multiple>
+                    <div class="container__drop-text">
+                        <div class="drop-area">
+                            <h2>Arrastra y suelta imágenes</h2>
+                            <span>O</span>
+                            <button>Seleciona tus archivos</button>
+                            <input type="file" name="" id="input-file" hidden multiple>
+                        </div>
+                        <textarea name="output" id="text_output" cols="40" rows="12" placeholder="Resultado de la encriptación" readonly style="resize: none;"></textarea>
                     </div>
                     <div id="preview"></div>
                     <div class="container__buttons">

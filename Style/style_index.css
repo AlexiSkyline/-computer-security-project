@@ -69,6 +69,11 @@ label {
 .container__type-encryption {
     text-align: center;    
 }
+.container_options {
+    margin-top: 20px;
+    text-align: center;
+    display: none;
+}
 
 /* Todo: Option Text Section */
 .option__text {
@@ -91,7 +96,6 @@ label {
     border-width: 2px;
 }
 .container__text-areas {
-    margin-top: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -139,10 +143,15 @@ textarea {
     display: none;
     align-items: center;
 }
+.container__drop-text {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+}
 .drop-area {
     border: 5px dashed #b8d4fe;
     height: 250px;
-    width: 500px;
+    width: 380px;
     border-radius: 5px;
     display: flex;
     align-items: center;

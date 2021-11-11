@@ -17,10 +17,13 @@ import { dragAndDrop } from "./dragAndDrop.js";
     });
 
     function showEncryptionOption () {
-        const banner         = document.querySelector( '.banner' ); 
-        optionText           = document.querySelector( '.option__text' );
-        const optionDocument = document.querySelector( '.option__document' );
+        const banner           = document.querySelector( '.banner' ); 
+        optionText             = document.querySelector( '.option__text' );
+        const optionDocument   = document.querySelector( '.option__document' );
+        const containerOptions = document.querySelector( '.container_options' );
+        
         banner.style.display = 'none';
+        containerOptions.style.display = 'block';
 
         if( this.id === 'texto' ) {
             disableButton( optionText );
@@ -48,7 +51,7 @@ import { dragAndDrop } from "./dragAndDrop.js";
     function validateFormOptionText ( e ) {
         e.preventDefault();
         const textEntry = document.querySelector( '#text_entry' );
-        textOutput      = optionText.querySelector( '#text_output' )
+        textOutput      = optionText.querySelector( '#text_output' );
 
         if( optionAlgorithm.value === '' ) {
             optionAlgorithm.classList.add( 'error' );
@@ -61,7 +64,7 @@ import { dragAndDrop } from "./dragAndDrop.js";
             textOutput.value = '';
             showMessageError( 'Todos los campos son obligatorios' );
             return;
-        } 
+        }
 
         textEntry.classList.remove( 'error' );
         optionAlgorithm.classList.remove( 'error' );
