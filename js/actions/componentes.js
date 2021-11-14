@@ -17,12 +17,12 @@ import { dragAndDrop } from "./dragAndDrop.js";
         const header        = document.querySelector( '.contaner__header' );
         const spinner       = document.querySelector( '.sk-circle' );
         const containerMain = document.querySelector( '.container_main' );
-
-        if( !session || !session.rol === 'encriptador' ) {
+        
+        if( !session || session.rol === 'desencriptador' ) {
             location.href = 'login.html';
         } else {
             informationUserSession = session;
-            console.log( session );
+            
             setTimeout(() =>{
                 spinner.style.display       = 'none';
                 header.style.display        = 'block';

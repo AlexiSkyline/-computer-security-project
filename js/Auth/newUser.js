@@ -49,7 +49,7 @@ import { createUser } from '../https/http-provider.js';
 	}
 
 	async function sendInformation ( informationUsuario ) {
-		const request = await createUser( informationUsuario);
+		const request = await createUser( informationUsuario );
 
 		const { msg, ruta, newUser } = request;
 		const { alertIcon, alertMessage, alertTitle, showConfirmButton, timer } = msg;
