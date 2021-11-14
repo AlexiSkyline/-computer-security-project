@@ -11,6 +11,7 @@ import { dragAndDrop } from "./dragAndDrop.js";
     let optionText;
     let buttonSave;
     let textOutput;
+    let buttonLogOut;
 
     const verifySession = ( session ) => {
         const header        = document.querySelector( '.contaner__header' );
@@ -32,14 +33,17 @@ import { dragAndDrop } from "./dragAndDrop.js";
 
     document.addEventListener( 'DOMContentLoaded', () => {
         const session = storageService.getSession();
+        buttonLogOut = document.querySelector( '.button__log-out' );
 
         verifySession( session );
-        
+
         showUserName();
 
         inputOpcions.forEach( input => {
             input.addEventListener( 'change', showEncryptionOption );
         });
+        
+        buttonLogOut.addEventListener( 'click', LogOut );
     });
 
     function showUserName () {
@@ -132,4 +136,8 @@ import { dragAndDrop } from "./dragAndDrop.js";
         buttonSave.classList.remove( 'disable' );
     }
 
+    function LogOut () {
+        localStorage.removeItem( 'userSession' );
+        location.href = 'login.html';
+    }
 })();
