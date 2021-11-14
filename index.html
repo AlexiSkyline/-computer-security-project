@@ -33,8 +33,8 @@
                     <label for="option_algorithm">Elija el algoritmo:</label>
                     <select name="option_algorithm" id="option_algorithm" required>
                         <option value="">-- Seleccione --</option>
-                        <option value="TripleDES">TripleDES</option>
-                        <option value="Rabbit">Rabbit</option>
+                        <option value="tripledes">TripleDES</option>
+                        <option value="rabbit">Rabbit</option>
                     </select> <!--*.select-->
                 </div> <!--*.container_options-->
                 <div class="option__text">
@@ -66,9 +66,7 @@
             </form> <!--*.form-->
             <img src="img/SAIA-Archivo-y-almacenamiento-de-documentos.png" alt="img_Archivo_y_almacenamiento_de_documentos" class="banner">
         </main> <!--*.main-->
-        <script src="js/actions/componentes.js" type="module"></script>
-
-
+        
         <div class="sk-circle">
             <div class="sk-circle1 sk-child"></div>
             <div class="sk-circle2 sk-child"></div>
@@ -82,6 +80,9 @@
             <div class="sk-circle10 sk-child"></div>
             <div class="sk-circle11 sk-child"></div>
             <div class="sk-circle12 sk-child"></div>
-          </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="js/actions/componentes.js" type="module"></script>
     </body> <!--*.body-->
 </html>

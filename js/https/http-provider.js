@@ -33,3 +33,20 @@ export const authUser = async ( informationUser ) => {
         return error.response.data;
     }
 }
+
+export const addEncryptedText = async ( informationText ) => {
+    const urlAddEncryptedText = url + '/texts';
+    const { encrytedText, algorithm, idCreator } = informationText;
+
+    try {
+        const request = await axios.post( urlAddEncryptedText, {
+            encrytedText: `${ encrytedText }`,
+            algorithm, 
+            idCreator
+        });
+
+        return request.data;
+    } catch (error) {
+        return error.response.data;
+    }
+} 

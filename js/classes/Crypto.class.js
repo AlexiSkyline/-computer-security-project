@@ -4,23 +4,23 @@ export class Crypto {
     }
 
     textEncryption( text, option ) {
-        this.ciphertext = null;
+        this.ciphertext = '';
         
-        if( option === 'TripleDES' ) {
+        if( option === 'tripledes' ) {
             this.ciphertext = CryptoJS.TripleDES.encrypt( text, this.key ).toString();
-        } else if( option === 'Rabbit' ) {
+        } else if( option === 'rabbit' ) {
             this.ciphertext = CryptoJS.Rabbit.encrypt( text, this.key ).toString();
         }
-
+        
         return this.ciphertext;
     }
 
     textDecryption( text, option ) {
         this.bytes = null;
 
-        if( option === 'TripleDES' ) {
+        if( option === 'tripledes' ) {
             this.bytes = CryptoJS.TripleDES.decrypt( text, this.key );
-        } else if( option === 'Rabbit' ) {
+        } else if( option === 'rabbit' ) {
             this.bytes = CryptoJS.Rabbit.decrypt( text, this.key );
         }
 

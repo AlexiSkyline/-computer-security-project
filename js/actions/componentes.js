@@ -1,4 +1,5 @@
 import { crypto, storageService } from "../classes/index.js";
+import { addEncryptedText } from "../https/http-provider.js";
 import { dragAndDrop } from "./dragAndDrop.js";
 
 ( function (){
@@ -12,8 +13,10 @@ import { dragAndDrop } from "./dragAndDrop.js";
     let buttonSave;
     let textOutput;
     let buttonLogOut;
+    let textEntry;
+    let newText;
 
-    const verifySession = ( session ) => {
+    function verifySession ( session ) {
         const header        = document.querySelector( '.contaner__header' );
         const spinner       = document.querySelector( '.sk-circle' );
         const containerMain = document.querySelector( '.container_main' );
@@ -29,6 +32,11 @@ import { dragAndDrop } from "./dragAndDrop.js";
                 containerMain.style.display = 'flex';
             }, 1500 );
         }
+    }
+
+    function LogOut () {
+        localStorage.removeItem( 'userSession' );
+        location.href = 'login.html';
     }
 
     document.addEventListener( 'DOMContentLoaded', () => {
@@ -67,7 +75,12 @@ import { dragAndDrop } from "./dragAndDrop.js";
             optionDocument.style.display = 'none';
 
             encryptButton = optionText.querySelector( '.button.encrypt' );
+            buttonSave    = optionText.querySelector( '.button.save');
             encryptButton.addEventListener( 'click', validateFormOptionText );
+            buttonSave.addEventListener( 'click', (e) => {
+                e.preventDefault();
+                sendTextEncrypted( newText, optionAlgorithm.value );
+            });
         } else {
             disableButton( optionDocument );
             optionText.style.display     = 'none';
@@ -86,8 +99,8 @@ import { dragAndDrop } from "./dragAndDrop.js";
 
     function validateFormOptionText ( e ) {
         e.preventDefault();
-        const textEntry = document.querySelector( '#text_entry' );
-        textOutput      = optionText.querySelector( '#text_output' );
+        textEntry = document.querySelector( '#text_entry' );
+        textOutput = optionText.querySelector( '#text_output' );
 
         if( optionAlgorithm.value === '' ) {
             optionAlgorithm.classList.add( 'error' );
@@ -104,7 +117,7 @@ import { dragAndDrop } from "./dragAndDrop.js";
 
         textEntry.classList.remove( 'error' );
         optionAlgorithm.classList.remove( 'error' );
-        showText( textEntry.value,  optionAlgorithm.value );
+        showText( textEntry.value, optionAlgorithm.value );
     }
 
     function showMessageError ( menssage ) {
@@ -124,10 +137,11 @@ import { dragAndDrop } from "./dragAndDrop.js";
     }
 
     function showText ( text, option ) {
-        const newText = crypto.textEncryption( text, option );
+        newText = crypto.textEncryption( text, option );
 
         if( !newText ) {
             showMessageError( 'Hubo un error al encriptar el texto' );
+            disableButton( optionText );
         }
 
         textOutput.value = `${newText}`;
@@ -136,8 +150,39 @@ import { dragAndDrop } from "./dragAndDrop.js";
         buttonSave.classList.remove( 'disable' );
     }
 
-    function LogOut () {
-        localStorage.removeItem( 'userSession' );
-        location.href = 'login.html';
+    async function sendTextEncrypted ( encrytedText, option ) {
+        if( textEntry.value.trim() === '' || optionAlgorithm.value === '' ) { 
+            const bodyAlert = {
+                alertTitle: "Error",
+                alertMessage: "!hubo un error al momento de analizar el contenido!",
+                alertIcon: 'error',
+                showConfirmButton: true,
+                timer: false,
+            }
+            return showAlert( bodyAlert );
+        }
+
+        const { msg } = await addEncryptedText({ encrytedText, algorithm: option,  idCreator: informationUserSession.id });
+        showAlert( msg );
+    }
+
+    function emptyInputs () {
+        optionAlgorithm.value = '';
+        textEntry.value = '';
+        textOutput.value = '';
+        disableButton( optionText );
+    }
+
+    function showAlert ( bodyAlert ) {
+        const { alertTitle, alertMessage, alertIcon, showConfirmButton, timer } = bodyAlert;
+        Swal.fire({
+			title: alertTitle,
+			text: alertMessage,
+			icon: alertIcon,
+			showConfirmButton: showConfirmButton,
+			timer: timer
+		}).then(() => {
+			emptyInputs();
+		});
     }
 })();
