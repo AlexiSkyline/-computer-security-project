@@ -1,7 +1,9 @@
-import { crypto } from "../classes/index.js";
+import { crypto, storageService } from "../classes/index.js";
 import { dragAndDrop } from "./dragAndDrop.js";
 
 ( function (){
+    let informationUserSession;
+
     const inputOpcions = document.querySelectorAll( 'input[name="option"]' );
 
     let encryptButton;
@@ -10,11 +12,41 @@ import { dragAndDrop } from "./dragAndDrop.js";
     let buttonSave;
     let textOutput;
 
+    const verifySession = ( session ) => {
+        const header        = document.querySelector( '.contaner__header' );
+        const spinner       = document.querySelector( '.sk-circle' );
+        const containerMain = document.querySelector( '.container_main' );
+
+        if( !session || !session.rol === 'encriptador' ) {
+            location.href = 'login.html';
+        } else {
+            informationUserSession = session;
+            console.log( session );
+            setTimeout(() =>{
+                spinner.style.display       = 'none';
+                header.style.display        = 'block';
+                containerMain.style.display = 'flex';
+            }, 1500 );
+        }
+    }
+
     document.addEventListener( 'DOMContentLoaded', () => {
+        const session = storageService.getSession();
+
+        verifySession( session );
+        
+        showUserName();
+
         inputOpcions.forEach( input => {
             input.addEventListener( 'change', showEncryptionOption );
         });
     });
+
+    function showUserName () {
+        const userName = document.querySelector( '.user__name' );
+        
+        userName.innerHTML = informationUserSession.userName;
+    }
 
     function showEncryptionOption () {
         const banner           = document.querySelector( '.banner' ); 

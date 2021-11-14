@@ -8,4 +8,18 @@ export class StorageService {
 
         localStorage.setItem( 'userSession', this.ciphertext );
     }
+
+    getSession() {
+        this.bytes = '';
+        this.session = localStorage.getItem( 'userSession' ) || false;
+
+        if( !this.session ) {
+            return false;
+        }
+
+        this.bytes = CryptoJS.TripleDES.decrypt( this.session, this.key )
+        this.originalText = this.bytes.toString( CryptoJS.enc.Utf8 );
+
+        return JSON.parse( this.originalText );
+    }
 };

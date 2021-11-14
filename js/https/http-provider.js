@@ -12,7 +12,7 @@ export const createUser = async ( usuario ) => {
             password,
             rol
         });
-        // const data = await request.json();
+        
         return request.data;
     } catch (error) {
         return error.response.data;
