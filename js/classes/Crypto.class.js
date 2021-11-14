@@ -1,7 +1,6 @@
 export class Crypto {
-
     constructor() {
-        this.key = 'Palabra Secreta'
+        this.key = 'Palabra Secreta';
     }
 
     textEncryption( text, option ) {

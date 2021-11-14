@@ -15,21 +15,21 @@ export const dragAndDrop = () => {
         input.click();
     });
     
-    encryptButton.addEventListener( 'click', validateFormOptionDocument );
+    encryptButton.addEventListener ( 'click', validateFormOptionDocument );
 
-    dropArea.addEventListener( 'dragover', (e) => {
+    dropArea.addEventListener ( 'dragover', (e) => {
         e.preventDefault();
         dropArea.classList.remove( 'error' );
         dropArea.classList.add( 'active' );
         dragText.textContent = 'Suelta para subir los archivos';
     });
 
-    document.addEventListener( 'dragleave', (e) => {
+    document.addEventListener ( 'dragleave', (e) => {
         e.preventDefault();
         dropArea.classList.add( 'error' );
     });
 
-    dropArea.addEventListener( 'drop', (e) => {
+    dropArea.addEventListener ( 'drop', (e) => {
         e.preventDefault();
         files = e.dataTransfer.files;
         showFiles( files );
@@ -38,19 +38,19 @@ export const dragAndDrop = () => {
         dragText.textContent = 'Arrastra y suelta imágenes';
     });
 
-    input.addEventListener( 'change', (e) => {
+    input.addEventListener ( 'change', (e) => {
         files = e.target.files;
         showFiles( files );
     })
 
-    button.addEventListener( 'change', () => { 
+    button.addEventListener ( 'change', () => { 
         files = this.files;
         dropArea.classList.add( 'active' );
         showFiles( files );
         dropArea.classList.remove( 'active' );
     });
 
-    function showFiles( files ) {
+    function showFiles ( files ) {
         if( files.length === undefined ) {
             processFiles( files );
         } else {
@@ -60,7 +60,7 @@ export const dragAndDrop = () => {
         }
     }
 
-    function processFile( file ) {
+    function processFile ( file ) {
         const docType = file.type;
         const validExtensions = [ "image/jpeg", "image/jpg", "image/png", "image/gif" ];
         
@@ -88,7 +88,7 @@ export const dragAndDrop = () => {
         fileReader.readAsDataURL( file );   
     }
 
-    function validateFormOptionDocument( e ) {
+    function validateFormOptionDocument ( e ) {
         e.preventDefault();
         
         if( optionAlgorithm.value === '' ) {
@@ -106,7 +106,7 @@ export const dragAndDrop = () => {
         convertBase64( files );
     }
 
-    function showMessageError( message ) {
+    function showMessageError ( message ) {
         const messageIsActive = optionDocument.querySelector( '.message__error' );
 
         if( !messageIsActive ) {
@@ -120,7 +120,7 @@ export const dragAndDrop = () => {
         }
     }
 
-    function convertBase64 ( files, option ) {
+    function convertBase64 ( files ) {
         Array.from( files ).forEach( file => {
             var render = new FileReader();
             render.readAsDataURL( file );
@@ -135,7 +135,7 @@ export const dragAndDrop = () => {
         });
     }
 
-    function encryptBase64( textBase64 ) {
+    function encryptBase64 ( textBase64 ) {
         const newText    = crypto.textEncryption( textBase64, optionAlgorithm.value );
         const textOutput = optionDocument.querySelector( '#text_output' );
 
@@ -145,5 +145,4 @@ export const dragAndDrop = () => {
 
         textOutput.value = `${newText}`;
     }    
-
 }

@@ -30,7 +30,7 @@ import { dragAndDrop } from "./dragAndDrop.js";
             optionText.style.display     = 'flex';
             optionDocument.style.display = 'none';
 
-            encryptButton = optionText.querySelector( '.button.encrypt' )
+            encryptButton = optionText.querySelector( '.button.encrypt' );
             encryptButton.addEventListener( 'click', validateFormOptionText );
         } else {
             disableButton( optionDocument );
@@ -38,7 +38,7 @@ import { dragAndDrop } from "./dragAndDrop.js";
             optionDocument.style.display = 'flex';
             dragAndDrop();
 
-            encryptButton = optionDocument.querySelector( '.button.encrypt' )
+            encryptButton = optionDocument.querySelector( '.button.encrypt' );
         }
     }
     
@@ -71,7 +71,7 @@ import { dragAndDrop } from "./dragAndDrop.js";
         showText( textEntry.value,  optionAlgorithm.value );
     }
 
-    function showMessageError( menssage ) {
+    function showMessageError ( menssage ) {
         const messageIsActive = document.querySelector( '.message__error' );
 
         if( !messageIsActive ) {
@@ -101,4 +101,3 @@ import { dragAndDrop } from "./dragAndDrop.js";
     }
 
 })();
-
