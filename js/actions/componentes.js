@@ -1,7 +1,7 @@
 import { crypto, storageService } from "../classes/index.js";
 import { addEncryptedText } from "../https/http-provider.js";
 import { dragAndDrop } from "./dragAndDrop.js";
-import { activeButtonSave, disableButtonEmpty, disableButtonSave } from "./globalFunctions.js";
+import { activeButtonSave, disableButtonEmpty, disableButtonSave, showAlert } from "./globalFunctions.js";
 
 ( function (){
     let informationUserSession;
@@ -161,30 +161,10 @@ import { activeButtonSave, disableButtonEmpty, disableButtonSave } from "./globa
                 showConfirmButton: true,
                 timer: false,
             }
-            return showAlert( bodyAlert );
+            return showAlert( bodyAlert, optionText );
         }
 
         const { msg } = await addEncryptedText({ encrytedText, algorithm: option,  idCreator: informationUserSession.id });
-        showAlert( msg );
-    }
-
-    function emptyInputs () {
-        optionAlgorithm.value = '';
-        textEntry.value = '';
-        textOutput.value = '';
-        disableButtonSave( optionText );
-    }
-
-    function showAlert ( bodyAlert ) {
-        const { alertTitle, alertMessage, alertIcon, showConfirmButton, timer } = bodyAlert;
-        Swal.fire({
-			title: alertTitle,
-			text: alertMessage,
-			icon: alertIcon,
-			showConfirmButton: showConfirmButton,
-			timer: timer
-		}).then(() => {
-			emptyInputs();
-		});
+        showAlert( msg, optionText );
     }
 })();

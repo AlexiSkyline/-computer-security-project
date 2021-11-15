@@ -1,17 +1,21 @@
-import { crypto } from "../classes/index.js";
-import { activeButtonEmpty, disableButtonEmpty } from "./globalFunctions.js";
+import { crypto, storageService } from "../classes/index.js";
+import { addEncryptedDocument } from "../https/http-provider.js";
+import { activeButtonEmpty, activeButtonSave, disableButtonEmpty, disableButtonSave, showAlert } from "./globalFunctions.js";
 
 export const dragAndDrop = () => {
+    let informationUserSession = storageService.getSession();;
     const optionDocument  = document.querySelector( '.option__document' );
     const dropArea        = document.querySelector( '.drop-area' );
     const dragText        = dropArea.querySelector( 'h2' );
     const button          = dropArea.querySelector( 'button' );
+    const buttonSave      = optionDocument.querySelector( '.button.save' );
     const encryptButton   = optionDocument.querySelector( '.button.encrypt' )
     const input           = dropArea.querySelector( '#input-file' );
     const optionAlgorithm = document.querySelector( '#option_algorithm' );
     let files;
     let bodyFileContainer;
-    let textOutput; 
+    let textOutput;
+    let newText; 
 
     button.addEventListener( 'click', (e) => {
         e.preventDefault();
@@ -19,6 +23,11 @@ export const dragAndDrop = () => {
     });
     
     encryptButton.addEventListener ( 'click', validateFormOptionDocument );
+
+    buttonSave.addEventListener( 'click', (e) => {
+        e.preventDefault(e);
+        sendDocumentEncrypted( newText, optionAlgorithm.value );
+    });
 
     dropArea.addEventListener ( 'dragover', (e) => {
         e.preventDefault();
@@ -57,14 +66,17 @@ export const dragAndDrop = () => {
     });
 
     button.addEventListener ( 'change', () => { 
-        files = this.files;
-        showFiles( files );
+        if( !files ) {
+            files = this.files;
+            showFiles( files );
+        } else {
+            showMessageError( 'Error, un archivo en espera' );
+        }
         dropArea.classList.add( 'active' );
         dropArea.classList.remove( 'active' );
     });
 
     function showFiles ( files ) {
-        console.log( files );
         if( files.length === 1 ) {
             for( const file of files ) {
                 processFile( file );
@@ -79,7 +91,6 @@ export const dragAndDrop = () => {
         const validExtensions = [ "image/jpeg", "image/jpg", "image/png", "image/gif" ];
         
         const fileReader = new FileReader();
-        const id = `file.${ Math.random().toString(32).substring(7) }`; 
 
         fileReader.addEventListener( 'load', () => {
             const fileUrl = fileReader.result;
@@ -91,12 +102,11 @@ export const dragAndDrop = () => {
                     <div class="status">
                         <span>El archivo: ${ file.name }, Esta: </span>
                         <span class="status-text">
-                            listo para encriptar
+                            Listo para encriptar
                         </span>
                     </div>
             `;
 
-            // const html = document.querySelector( '#preview' ).innerHTML;
             document.querySelector( '#preview' ).appendChild( bodyFileContainer );
         });
 
@@ -167,7 +177,7 @@ export const dragAndDrop = () => {
     }
 
     function encryptBase64 ( textBase64 ) {
-        const newText  = crypto.textEncryption( textBase64, optionAlgorithm.value );
+        newText  = crypto.textEncryption( textBase64, optionAlgorithm.value );
         textOutput     = optionDocument.querySelector( '#text_output' );
 
         if( !textBase64 ) {
@@ -175,6 +185,16 @@ export const dragAndDrop = () => {
         }
 
         textOutput.value = `${newText}`;
-        console.log( files );
+        activeButtonSave( optionDocument );
     }    
+
+    async function sendDocumentEncrypted ( encrytedDocument, algorithm ) {
+        const { msg } = await addEncryptedDocument({ encrytedDocument, algorithm, idCreator: informationUserSession.id });
+
+        clearList();
+        showAlert( msg, optionDocument );
+        files = null;
+        bodyFileContainer.remove();
+        bodyFileContainer = null;
+    }
 }

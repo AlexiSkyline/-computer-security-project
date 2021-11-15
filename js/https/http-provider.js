@@ -40,7 +40,7 @@ export const addEncryptedText = async ( informationText ) => {
 
     try {
         const request = await axios.post( urlAddEncryptedText, {
-            encrytedText: `${ encrytedText }`,
+            encrytedText,
             algorithm, 
             idCreator
         });
@@ -50,3 +50,20 @@ export const addEncryptedText = async ( informationText ) => {
         return error.response.data;
     }
 } 
+
+export const addEncryptedDocument = async ( informationDocument ) => {
+    const urlAddEncryptedDocument = url + '/documents';
+    const { encrytedDocument, algorithm, idCreator } = informationDocument;
+
+    try {
+        const request = await axios.post( urlAddEncryptedDocument, {
+            encrytedDocument,
+            algorithm, 
+            idCreator
+        });
+
+        return request.data;
+    } catch (error) {
+        return error.response.data;
+    }
+}
