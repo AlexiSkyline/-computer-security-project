@@ -1,7 +1,7 @@
 import { crypto, storageService } from "../classes/index.js";
 import { addEncryptedText } from "../https/http-provider.js";
 import { dragAndDrop } from "./dragAndDrop.js";
-import { activeButtonSave, disableButtonEmpty, disableButtonSave, showAlert } from "./globalFunctions.js";
+import { activeButtonSave, disableButtonEmpty, disableButtonSave, LogOut, showAlert, showUserName, verifySession } from "./globalFunctions.js";
 
 ( function (){
     let informationUserSession;
@@ -18,36 +18,13 @@ import { activeButtonSave, disableButtonEmpty, disableButtonSave, showAlert } fr
     let newText;
     let copyText;
 
-    function verifySession ( session ) {
-        const header        = document.querySelector( '.contaner__header' );
-        const spinner       = document.querySelector( '.sk-circle' );
-        const containerMain = document.querySelector( '.container_main' );
-        
-        if( !session || session.rol === 'desencriptador' ) {
-            location.href = 'login.html';
-        } else {
-            informationUserSession = session;
-            
-            setTimeout(() =>{
-                spinner.style.display       = 'none';
-                header.style.display        = 'block';
-                containerMain.style.display = 'flex';
-            }, 1500 );
-        }
-    }
-
-    function LogOut () {
-        localStorage.removeItem( 'userSession' );
-        location.href = 'login.html';
-    }
-
     document.addEventListener( 'DOMContentLoaded', () => {
         const session = storageService.getSession();
         buttonLogOut = document.querySelector( '.button__log-out' );
 
-        verifySession( session );
+        verifySession( session, 'desencriptador' ) && ( informationUserSession = verifySession( session, 'desencriptador' ) );
 
-        showUserName();
+        showUserName( informationUserSession.userName );
 
         inputOpcions.forEach( input => {
             input.addEventListener( 'change', showEncryptionOption );
@@ -55,12 +32,6 @@ import { activeButtonSave, disableButtonEmpty, disableButtonSave, showAlert } fr
         
         buttonLogOut.addEventListener( 'click', LogOut );
     });
-
-    function showUserName () {
-        const userName = document.querySelector( '.user__name' );
-        
-        userName.innerHTML = informationUserSession.userName;
-    }
 
     function showEncryptionOption () {
         const banner           = document.querySelector( '.banner' ); 

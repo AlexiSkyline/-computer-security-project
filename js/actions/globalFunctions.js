@@ -49,3 +49,32 @@ export function showAlert ( bodyAlert, reference ) {
         reference && disableButtonEmpty( reference );
     });
 }
+
+export function LogOut () {
+    localStorage.removeItem( 'userSession' );
+    location.href = 'login.html';
+}
+
+export function showUserName ( userName ) {
+    const userNameA = document.querySelector( '.user__name' );
+    
+    userNameA.innerHTML = userName;
+}
+
+
+export function verifySession ( session, rolNotAllowed ) {
+    const header        = document.querySelector( '.contaner__header' );
+    const spinner       = document.querySelector( '.sk-circle' );
+    const containerMain = document.querySelector( '.container_main' );
+    
+    if( !session || session.rol === rolNotAllowed ) {
+        return location.href = 'login.html';
+    } else {
+        setTimeout(() =>{
+            spinner.style.display       = 'none';
+            header.style.display        = 'block';
+            containerMain.style.display = 'block';
+        }, 1500 );
+        return session;
+    }
+}

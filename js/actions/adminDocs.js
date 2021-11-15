@@ -1,6 +1,6 @@
 import { crypto, storageService } from "../classes/index.js";
 import { deleteEncryptedDocument, getEncryptedDocuments } from "../https/http-provider.js";
-import { showAlert } from "./globalFunctions.js";
+import { LogOut, showAlert, showUserName, verifySession } from "./globalFunctions.js";
 
 ( function (){
     let informationUserSession;
@@ -12,37 +12,14 @@ import { showAlert } from "./globalFunctions.js";
 
     let infoDocuments = [];
 
-    function verifySession ( session ) {
-        const header        = document.querySelector( '.contaner__header' );
-        const spinner       = document.querySelector( '.sk-circle' );
-        const containerMain = document.querySelector( '.container_main' );
-        
-        if( !session || session.rol === 'encriptador' ) {
-            location.href = 'login.html';
-        } else {
-            informationUserSession = session;
-            
-            setTimeout(() =>{
-                spinner.style.display       = 'none';
-                header.style.display        = 'block';
-                containerMain.style.display = 'block';
-            }, 1500 );
-        }
-    }
-
-    function LogOut () {
-        localStorage.removeItem( 'userSession' );
-        location.href = 'login.html';
-    }
-
     document.addEventListener ( 'DOMContentLoaded', () => {
         const buttonLogOut = document.querySelector( '.button__log-out' );
         const session = storageService.getSession();
-        verifySession( session );
+        verifySession( session, 'encriptador' ) && ( informationUserSession = verifySession( session, 'encriptador' ) );
 
         validateData();
 
-        showUserName();
+        showUserName( informationUserSession.userName );
 
         containerInfoDocument.addEventListener( 'click', getDocument );
         buttonClear.addEventListener( 'click', ( e ) => {
@@ -52,12 +29,6 @@ import { showAlert } from "./globalFunctions.js";
 
         buttonLogOut.addEventListener( 'click', LogOut );
     });
-
-    function showUserName () {
-        const userName = document.querySelector( '.user__name' );
-        
-        userName.innerHTML = informationUserSession.userName;
-    }
 
     async function validateData () {
         const { documents } = await getEncryptedDocuments( informationUserSession.id ); 
@@ -95,8 +66,7 @@ import { showAlert } from "./globalFunctions.js";
 
             const decryptedDocument = crypto.textDecryption( infoDoc[0].encrytedDocument, infoDoc[0].algorithm );
             
-            // console.log( decryptedDocument );
-            // showDecryptedText( infoText[0], decryptedText );
+            showBase64Text( infoDoc[0], decryptedDocument );
         }
 
         if( e.target.classList.contains( 'bi-trash' ) ) {
@@ -118,6 +88,14 @@ import { showAlert } from "./globalFunctions.js";
                 }
             });
         }
+    }
+
+    function showBase64Text ( infoDocument, documentoBase64 ) {
+        creatorName.innerText = `${ infoDocument.Creator }`;
+        typeAlgorithm.innerText = `${ infoDocument.algorithm === 'tripledes' ? 'TripleDes' : 'Rabbit' }`;
+        dateCreation.innerText = `${ infoDocument.createdAt.substring( 0, infoDocument.createdAt.indexOf( 'T' ) ) }`;
+        
+        console.log( documentoBase64 );
     }
 
     function clearDescription () {

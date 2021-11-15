@@ -1,6 +1,6 @@
 import { crypto, storageService } from "../classes/index.js";
 import { deleteEncryptedText, getEncryptedTexts } from "../https/http-provider.js";
-import { showAlert } from "./globalFunctions.js";
+import { LogOut, showAlert, showUserName, verifySession } from "./globalFunctions.js";
 
 ( function (){
     let informationUserSession;
@@ -13,37 +13,14 @@ import { showAlert } from "./globalFunctions.js";
 
     let infoTexts = [];
 
-    function verifySession ( session ) {
-        const header        = document.querySelector( '.contaner__header' );
-        const spinner       = document.querySelector( '.sk-circle' );
-        const containerMain = document.querySelector( '.container_main' );
-        
-        if( !session || session.rol === 'encriptador' ) {
-            location.href = 'login.html';
-        } else {
-            informationUserSession = session;
-            
-            setTimeout(() =>{
-                spinner.style.display       = 'none';
-                header.style.display        = 'block';
-                containerMain.style.display = 'block';
-            }, 1500 );
-        }
-    }
-
-    function LogOut () {
-        localStorage.removeItem( 'userSession' );
-        location.href = 'login.html';
-    }
-
     document.addEventListener ( 'DOMContentLoaded', () => {
         const buttonLogOut = document.querySelector( '.button__log-out' );
         const session = storageService.getSession();
-        verifySession( session );
+        verifySession( session, 'encriptador' ) && ( informationUserSession = verifySession( session, 'encriptador' ) );
 
         validateData();
 
-        showUserName();
+        showUserName( informationUserSession.userName );
 
         containerInfoText.addEventListener( 'click', getText );
         buttonClear.addEventListener( 'click', ( e ) => {
@@ -53,12 +30,6 @@ import { showAlert } from "./globalFunctions.js";
 
         buttonLogOut.addEventListener( 'click', LogOut );
     });
-
-    function showUserName () {
-        const userName = document.querySelector( '.user__name' );
-        
-        userName.innerHTML = informationUserSession.userName;
-    }
 
     async function validateData () {
         const { texts } = await getEncryptedTexts( informationUserSession.id ); 
