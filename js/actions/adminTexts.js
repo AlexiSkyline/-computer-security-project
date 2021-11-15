@@ -61,7 +61,7 @@ import { showAlert } from "./globalFunctions.js";
     }
 
     async function validateData () {
-        const { texts } = await getEncryptedTexts( 1 ); 
+        const { texts } = await getEncryptedTexts( informationUserSession.id ); 
         infoTexts = texts;
         console.log( texts );
         createHTML ( texts );

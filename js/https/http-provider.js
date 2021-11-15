@@ -93,3 +93,15 @@ export const deleteEncryptedText = async ( idText, idCreator ) => {
         return error.response.data;
     }
 }
+
+export const getEncryptedDocuments = async ( id ) => {
+    const urlGetEncryptedDocuments = url + `/documents/${ id }`;
+    
+    try {
+        const request = await axios.get( urlGetEncryptedDocuments );
+
+        return request.data;
+    } catch (error) {
+        return error.response.data;
+    }
+}
