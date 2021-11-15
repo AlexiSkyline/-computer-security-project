@@ -1,5 +1,6 @@
 import { crypto, storageService } from "../classes/index.js";
-import { getEncryptedTexts } from "../https/http-provider.js";
+import { deleteEncryptedText, getEncryptedTexts } from "../https/http-provider.js";
+import { showAlert } from "./globalFunctions.js";
 
 ( function (){
     let informationUserSession;
@@ -66,7 +67,8 @@ import { getEncryptedTexts } from "../https/http-provider.js";
     function createHTML ( infoTexts ) {
         infoTexts.forEach( ( infoText ) => {
             const rowText = document.createElement( 'tr' );
-            const { id, encrytedText, algorithm, Creator, state } = infoText;
+            const { id, encrytedText, algorithm, Creator, state, createdAt } = infoText;
+            rowText.classList.add( `body__text${ id }` );
 
             if( state ) {
                 rowText.innerHTML = `
@@ -74,6 +76,7 @@ import { getEncryptedTexts } from "../https/http-provider.js";
                 <td class="text-center">${ encrytedText.substring( 0, 8 ) }.....</td>
                 <td class="text-center">${ algorithm === 'tripledes' ? 'TripleDes' : 'Rabbit' }</td>
                 <td class="text-center">${ Creator }</td>
+                <td class="text-center">${ createdAt.substring( 0, createdAt.indexOf( 'T' ) ) }</td>
                 <td class="text-center"><a href="#" class="text-success"  title="Desencriptar" data-id="${id}"><i class="bi bi-body-text"></i></a></td>
                 <td class="text-center"><a href="#" class="text-danger" title="Eliminar" data-id="${id}"><i class="bi bi-trash"></i></a></td>
                 `;
@@ -92,6 +95,26 @@ import { getEncryptedTexts } from "../https/http-provider.js";
             const decryptedText = crypto.textDecryption( infoText[0].encrytedText, infoText[0].algorithm );
            
             showDecryptedText( infoText[0], decryptedText );
+        } 
+
+        if( e.target.classList.contains( 'bi-trash' ) ) {
+            const id = e.target.parentElement.getAttribute( 'data-id' );
+            
+            Swal.fire({
+                title: '¿Estas Seguro?',
+                text: 'El producto se eliminara',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar'
+            }).then(( result ) => {
+                if( result.value ) {
+                    sendRequestDelete( id );
+                    clearHTML( id );
+                }
+            });
         }
     }
 
@@ -109,5 +132,17 @@ import { getEncryptedTexts } from "../https/http-provider.js";
         typeAlgorithm.innerText = '';
         dateCreation.innerText = '';
         formTextArea.value = '';
+    }
+
+    async function sendRequestDelete( id ) {
+        const request = await deleteEncryptedText( id, informationUserSession.id );
+        console.log( id );
+        showAlert( request.msg );
+    }
+
+    function clearHTML ( id ) {
+        const bodyText = document.querySelector( `.body__text${ id }` );
+
+        bodyText.remove();
     }
 })();

@@ -79,3 +79,17 @@ export const getEncryptedTexts = async ( id ) => {
         return error.response.data;
     }
 }
+
+export const deleteEncryptedText = async ( idText, idCreator ) => {
+    const urlDeleteEncryptedTexts = url + `/texts/${ idText }`;
+
+    try {
+        const request = await axios.delete( urlDeleteEncryptedTexts, {
+            idCreator
+        });
+
+        return request.data;
+    } catch (error) {
+        return error.response.data;
+    }
+}

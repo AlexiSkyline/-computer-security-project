@@ -44,8 +44,8 @@ export function showAlert ( bodyAlert, reference ) {
         showConfirmButton: showConfirmButton,
         timer: timer
     }).then(() => {
-        emptyInputs( reference );
-        disableButtonSave( reference );
-        disableButtonEmpty( reference );
+        reference && emptyInputs( reference );
+        reference && disableButtonSave( reference );
+        reference && disableButtonEmpty( reference );
     });
 }
