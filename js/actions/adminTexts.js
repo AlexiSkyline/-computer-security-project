@@ -12,8 +12,27 @@ import { getEncryptedTexts } from "../https/http-provider.js";
 
     let infoTexts = [];
 
+    function verifySession ( session ) {
+        const header        = document.querySelector( '.contaner__header' );
+        const spinner       = document.querySelector( '.sk-circle' );
+        const containerMain = document.querySelector( '.container_main' );
+        
+        if( !session || session.rol === 'encriptador' ) {
+            location.href = 'login.html';
+        } else {
+            informationUserSession = session;
+            
+            setTimeout(() =>{
+                spinner.style.display       = 'none';
+                header.style.display        = 'block';
+                containerMain.style.display = 'block';
+            }, 1500 );
+        }
+    }
+
     document.addEventListener ( 'DOMContentLoaded', () => {
-        informationUserSession = storageService.getSession();
+        const session = storageService.getSession();
+        verifySession( session );
 
         validateData();
 
