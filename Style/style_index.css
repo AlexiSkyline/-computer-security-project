@@ -118,6 +118,8 @@ textarea {
 }
 .container__buttons {
     margin-top: 30px;
+    display: flex;
+    gap: 20px;
 }
 .button {
     background-color: #1E98F2;
@@ -130,11 +132,16 @@ textarea {
 }
 .button:hover {
     background-color: #115686;
-}
-.encrypt {
-    margin-right: 10px;
+    cursor: pointer;
 }
 .button.save.disable {
+    cursor: not-allowed;
+    background-color: #ddd;
+}
+.button.empty {
+    background-color: #fd5353;
+}
+.button.empty.disable {
     cursor: not-allowed;
     background-color: #ddd;
 }
@@ -210,7 +217,7 @@ textarea {
     color: #ff0000;
 }
 .option__document .container__buttons {
-    margin-bottom: 100px;
+    margin-bottom: 40px;
 }
 .message__error {
     text-align: center;

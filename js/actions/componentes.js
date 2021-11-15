@@ -1,6 +1,7 @@
 import { crypto, storageService } from "../classes/index.js";
 import { addEncryptedText } from "../https/http-provider.js";
 import { dragAndDrop } from "./dragAndDrop.js";
+import { activeButtonSave, disableButtonEmpty, disableButtonSave } from "./globalFunctions.js";
 
 ( function (){
     let informationUserSession;
@@ -15,6 +16,7 @@ import { dragAndDrop } from "./dragAndDrop.js";
     let buttonLogOut;
     let textEntry;
     let newText;
+    let copyText;
 
     function verifySession ( session ) {
         const header        = document.querySelector( '.contaner__header' );
@@ -70,31 +72,31 @@ import { dragAndDrop } from "./dragAndDrop.js";
         containerOptions.style.display = 'block';
 
         if( this.id === 'texto' ) {
-            disableButton( optionText );
+            disableButtonSave( optionText );
             optionText.style.display     = 'flex';
             optionDocument.style.display = 'none';
 
             encryptButton = optionText.querySelector( '.button.encrypt' );
             buttonSave    = optionText.querySelector( '.button.save');
-            encryptButton.addEventListener( 'click', validateFormOptionText );
+            encryptButton.addEventListener( 'click', validateFormOptionText )
+            
             buttonSave.addEventListener( 'click', (e) => {
                 e.preventDefault();
+                if( copyText !== textEntry.value ) { 
+                    showText( textEntry.value, optionAlgorithm.value ); 
+                }
+
                 sendTextEncrypted( newText, optionAlgorithm.value );
             });
         } else {
-            disableButton( optionDocument );
+            disableButtonSave( optionDocument );
+            disableButtonEmpty( optionDocument );
             optionText.style.display     = 'none';
             optionDocument.style.display = 'flex';
             dragAndDrop();
 
             encryptButton = optionDocument.querySelector( '.button.encrypt' );
         }
-    }
-    
-    function disableButton ( reference ) {
-        buttonSave = reference.querySelector( '.button.save' );
-        buttonSave.disabled = true;
-        buttonSave.classList.add( 'disable' );
     }
 
     function validateFormOptionText ( e ) {
@@ -138,16 +140,16 @@ import { dragAndDrop } from "./dragAndDrop.js";
 
     function showText ( text, option ) {
         newText = crypto.textEncryption( text, option );
+        copyText = text;
 
         if( !newText ) {
             showMessageError( 'Hubo un error al encriptar el texto' );
-            disableButton( optionText );
+            disableButtonSave( optionText );
         }
 
         textOutput.value = `${newText}`;
     
-        buttonSave.disabled = false;
-        buttonSave.classList.remove( 'disable' );
+        activeButtonSave( optionText );
     }
 
     async function sendTextEncrypted ( encrytedText, option ) {
@@ -170,7 +172,7 @@ import { dragAndDrop } from "./dragAndDrop.js";
         optionAlgorithm.value = '';
         textEntry.value = '';
         textOutput.value = '';
-        disableButton( optionText );
+        disableButtonSave( optionText );
     }
 
     function showAlert ( bodyAlert ) {

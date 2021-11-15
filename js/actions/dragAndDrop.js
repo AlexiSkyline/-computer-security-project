@@ -1,4 +1,5 @@
 import { crypto } from "../classes/index.js";
+import { activeButtonEmpty, disableButtonEmpty } from "./globalFunctions.js";
 
 export const dragAndDrop = () => {
     const optionDocument  = document.querySelector( '.option__document' );
@@ -9,6 +10,8 @@ export const dragAndDrop = () => {
     const input           = dropArea.querySelector( '#input-file' );
     const optionAlgorithm = document.querySelector( '#option_algorithm' );
     let files;
+    let bodyFileContainer;
+    let textOutput; 
 
     button.addEventListener( 'click', (e) => {
         e.preventDefault();
@@ -31,32 +34,43 @@ export const dragAndDrop = () => {
 
     dropArea.addEventListener ( 'drop', (e) => {
         e.preventDefault();
-        files = e.dataTransfer.files;
-        showFiles( files );
+        
+        if( !files ) {
+            files = e.dataTransfer.files;
+            showFiles( files );
+        } else {
+            showMessageError( 'Error, un archivo en espera' );
+        }
+        
         dropArea.classList.remove( 'active' );
         dropArea.classList.remove( 'error' );
         dragText.textContent = 'Arrastra y suelta imágenes';
     });
 
     input.addEventListener ( 'change', (e) => {
-        files = e.target.files;
-        showFiles( files );
-    })
+        if( !files ) {
+            files = e.target.files;
+            showFiles( files );
+        } else {
+            showMessageError( 'Error, un archivo en espera' );
+        }
+    });
 
     button.addEventListener ( 'change', () => { 
         files = this.files;
-        dropArea.classList.add( 'active' );
         showFiles( files );
+        dropArea.classList.add( 'active' );
         dropArea.classList.remove( 'active' );
     });
 
     function showFiles ( files ) {
-        if( files.length === undefined ) {
-            processFiles( files );
-        } else {
+        console.log( files );
+        if( files.length === 1 ) {
             for( const file of files ) {
                 processFile( file );
             }
+        } else {
+            showMessageError( 'Error, solo 1 archivo ala vez' );
         }
     }
 
@@ -67,24 +81,26 @@ export const dragAndDrop = () => {
         const fileReader = new FileReader();
         const id = `file.${ Math.random().toString(32).substring(7) }`; 
 
-        fileReader.addEventListener( 'load', ( e ) => {
+        fileReader.addEventListener( 'load', () => {
             const fileUrl = fileReader.result;
-            const image = `
-                <div id="${id}" class="file-container">
+            bodyFileContainer =  document.createElement( 'div' );
+            bodyFileContainer.classList.add( 'file-container' );
+            
+            bodyFileContainer.innerHTML = `
                     <img src="${ validExtensions.includes( docType ) ? fileUrl : 'https://img.icons8.com/color/96/000000/check-file.png' }" width="30"/>
                     <div class="status">
-                        <span>${ file.name }</span>
+                        <span>El archivo: ${ file.name }, Esta: </span>
                         <span class="status-text">
-                            Loading ...
+                            listo para encriptar
                         </span>
                     </div>
-                </div>
             `;
 
-            const html = document.querySelector( '#preview' ).innerHTML;
-            document.querySelector( '#preview' ).innerHTML = image + html;
+            // const html = document.querySelector( '#preview' ).innerHTML;
+            document.querySelector( '#preview' ).appendChild( bodyFileContainer );
         });
 
+        clearList();
         fileReader.readAsDataURL( file );   
     }
 
@@ -120,6 +136,21 @@ export const dragAndDrop = () => {
         }
     }
 
+    function clearList() {
+        activeButtonEmpty( optionDocument );
+        const buttonEmpty = optionDocument.querySelector( '.button.empty' );
+        textOutput = optionDocument.querySelector( '#text_output' );
+        
+        buttonEmpty.onclick = (e) => {
+            e.preventDefault();
+            files = null;
+            bodyFileContainer.remove();
+            bodyFileContainer = null;
+            textOutput.value = '';
+            disableButtonEmpty( optionDocument );
+        }
+    }
+
     function convertBase64 ( files ) {
         Array.from( files ).forEach( file => {
             var render = new FileReader();
@@ -136,13 +167,14 @@ export const dragAndDrop = () => {
     }
 
     function encryptBase64 ( textBase64 ) {
-        const newText    = crypto.textEncryption( textBase64, optionAlgorithm.value );
-        const textOutput = optionDocument.querySelector( '#text_output' );
+        const newText  = crypto.textEncryption( textBase64, optionAlgorithm.value );
+        textOutput     = optionDocument.querySelector( '#text_output' );
 
         if( !textBase64 ) {
             showMessageError( 'Hubo un Error al encriptar el Archivo' );
         }
 
         textOutput.value = `${newText}`;
+        console.log( files );
     }    
 }
