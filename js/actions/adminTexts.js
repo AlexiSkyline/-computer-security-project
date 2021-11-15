@@ -46,4 +46,33 @@ import { getEncryptedTexts } from "../https/http-provider.js";
             }
         });
     }
+
+    function getText ( e ) {
+
+        if( e.target.classList.contains( 'bi-body-text' ) ) {
+            const id = e.target.parentElement.getAttribute( 'data-id' );
+            
+            const infoText = infoTexts.filter( text => text.id === parseInt( id ) );
+
+            const decryptedText = crypto.textDecryption( infoText[0].encrytedText, infoText[0].algorithm );
+           
+            showDecryptedText( infoText[0], decryptedText );
+        }
+    }
+
+    function showDecryptedText ( infoText, decryptedText ) {
+        creatorName.innerText = `${ infoText.Creator }`;
+        typeAlgorithm.innerText = `${ infoText.algorithm === 'tripledes' ? 'TripleDes' : 'Rabbit' }`;
+        dateCreation.innerText = `${ infoText.createdAt.substring( 0, infoText.createdAt.indexOf( 'T' ) ) }`;
+        formTextArea.value = decryptedText;
+    } 
+
+    function clearDescription ( e ) {
+        e.preventDefault();
+
+        creatorName.innerText = '';
+        typeAlgorithm.innerText = '';
+        dateCreation.innerText = '';
+        formTextArea.value = '';
+    }
 })();
