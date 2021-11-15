@@ -46,7 +46,10 @@ import { showAlert } from "./globalFunctions.js";
         showUserName();
 
         containerInfoText.addEventListener( 'click', getText );
-        buttonClear.addEventListener( 'click', clearDescription );
+        buttonClear.addEventListener( 'click', ( e ) => {
+            e.preventDefault();
+            clearDescription();
+        });
 
         buttonLogOut.addEventListener( 'click', LogOut );
     });
@@ -125,9 +128,7 @@ import { showAlert } from "./globalFunctions.js";
         formTextArea.value = decryptedText;
     } 
 
-    function clearDescription ( e ) {
-        e.preventDefault();
-
+    function clearDescription () {
         creatorName.innerText = '';
         typeAlgorithm.innerText = '';
         dateCreation.innerText = '';
@@ -142,7 +143,7 @@ import { showAlert } from "./globalFunctions.js";
 
     function clearHTML ( id ) {
         const bodyText = document.querySelector( `.body__text${ id }` );
-
         bodyText.remove();
+        clearDescription();
     }
 })();

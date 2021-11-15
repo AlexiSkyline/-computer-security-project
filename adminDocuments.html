@@ -13,31 +13,31 @@
 <link rel="stylesheet" href="Style/style_index.css">
 </head>
 <body>
-    <header class="contaner__header">
+    <header class="contaner__header d-block">
         <div class="container__navbar">
             <div class="container__info">
                 <img src="img/login-image.jpg" alt="profile_picture">
                 <a href="#" class="user__name">Alexis Evaristo</a>
-                <a href="adminTexts.html">Textos Encriptados</a>
-                <a href="adminDocuments.html">Documentos Encriptados</a>
+                <a href="adminTexts.html">Textos Encripados</a>
+                <a href="#">Documentos Encripados</a>
             </div>  <!--*.container__info-->
             <a href="#" class="button__log-out">Cerrar Sesión</a>
         </div> <!--*.container__navbar-->
     </header> <!--*.header-->
 
-    <div class="container mt-4 container_main">
+    <div class="container mt-4 container_main d-block">
         <div class="row justify-content-center">
             <div class="col-md-8">
                <div class="card">
                    <div class="card-header">
-                       Lista De Textos Encriptados:
+                       Lista De Documentos Encriptados:
                    </div>
                    <div class="p4">
                        <table class="table align-middle">
                            <thead>
                                <tr>
                                    <th scope="col" class="text-center">#Id</th>
-                                   <th scope="col" class="text-center">Texto encriptado</th>
+                                   <th scope="col" class="text-center">Documento encriptado</th>
                                    <th scope="col" class="text-center">Algoritmo</th>
                                    <th scope="col" class="text-center">Creador</th>
                                    <th scope="col" class="text-center">Fecha de Creación</th>
@@ -62,15 +62,15 @@
             <div class="col-md-4">
                <div class="card">
                    <div class="card-header text-center">
-                       Texto Desencriptado.
+                       Documento Desencriptado.
                    </div>
                    <form class="p-4 mt-0">
-                        <p class="text-center">Información del Texto</p>
+                        <p class="text-center">Información del Documento</p>
                         <p class="creator__name">Creador: <span></span> </p>
                         <p class="type__algorithm">Algoritmo: <span></span> </p>
                         <p class="date__creation"> fechas de creación: <span></span> </p>
                         <div class="d-grid">
-                            <textarea name="text" class="form-text-area" cols="40" rows="10" style="resize: none;"></textarea>
+                            <input type="file">
                         </div>
                         
                         <div class="d-grid mt-3">
@@ -83,7 +83,7 @@
         </div>
     </div> <!--*.container mt-4-->
 
-    <div class="sk-circle">
+    <div class="sk-circle d-none">
         <div class="sk-circle1 sk-child"></div>
         <div class="sk-circle2 sk-child"></div>
         <div class="sk-circle3 sk-child"></div>
@@ -100,6 +100,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="js/actions/adminTexts.js" type="module"></script>
+    <script src="js/actions/adminDocs.js" type="module"></script>
 </body>
 </html>
