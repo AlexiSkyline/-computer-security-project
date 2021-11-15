@@ -29,6 +29,7 @@ body{
 }
 .user__name {
     color: #f7f7f7;
+    margin-top: 15px;
 }
 .container__navbar a {
     align-self: center;

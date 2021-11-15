@@ -67,3 +67,15 @@ export const addEncryptedDocument = async ( informationDocument ) => {
         return error.response.data;
     }
 }
+
+export const getEncryptedTexts = async ( id ) => {
+    const urlGetEncryptedTexts = url + `/texts/${ id }`;
+    
+    try {
+        const request = await axios.get( urlGetEncryptedTexts );
+
+        return request.data;
+    } catch (error) {
+        return error.response.data;
+    }
+}

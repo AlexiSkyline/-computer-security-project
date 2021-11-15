@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<link rel="stylesheet" href="Style/style_index.css">
+</head>
+<body>
+    <header class="contaner__header d-block">
+        <div class="container__navbar">
+            <div class="container__info">
+                <img src="img/login-image.jpg" alt="profile_picture">
+                <a href="#" class=".user__name">Alexis Evaristo</a>
+                <a href="adminTexts.html">Textos Encripados</a>
+                <a href="#">Documentos Encripados</a>
+            </div>  <!--*.container__info-->
+            <a href="#" class="button__log-out">Cerrar Sesión</a>
+        </div> <!--*.container__navbar-->
+    </header> <!--*.header-->
+
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+               <div class="card">
+                   <div class="card-header">
+                       Lista De Textos Encriptados:
+                   </div>
+                   <div class="p4">
+                       <table class="table align-middle">
+                           <thead>
+                               <tr>
+                                   <th scope="col" class="text-center">#Id</th>
+                                   <th scope="col" class="text-center">Texto encripado</th>
+                                   <th scope="col" class="text-center">Algoritmo</th>
+                                   <th scope="col" class="text-center">Creador</th>
+                                   <th scope="col" colspan="2" class="text-center">Opciones</th>
+                               </tr>
+                           </thead>
+                           
+                           <tbody class="container__info-text">
+                               <!-- <tr>
+                                   <td scope="col" class="text-center">1</td>
+                                   <td class="text-center">Alexis</td>
+                                   <td class="text-center">21</td>
+                                   <td class="text-center">Acuario</td>
+                                   <td class="text-center"><a href="#" class="text-success"  title="Desencriptar"><i class="bi bi-body-text"></i></a></td>
+                                   <td class="text-center"><a href="#" class="text-danger" title="Eliminar"><i class="bi bi-trash"></i></a></td>
+                               </tr>-->
+                           </tbody>
+                       </table>
+                   </div>
+               </div> 
+            </div>
+            <div class="col-md-4">
+               <div class="card">
+                   <div class="card-header text-center">
+                       Texto Desencriptado.
+                   </div>
+                   <form class="p-4 mt-0">
+                        <p class="text-center">Información del Texto</p>
+                        <p class="creator__name">Creador: <span></span> </p>
+                        <p class="type__algorithm">Algoritmo: <span></span> </p>
+                        <p class="date__creation"> fechas de creación: <span></span> </p>
+                        <div class="d-grid">
+                            <textarea name="text" class="form-text-area" cols="40" rows="10" style="resize: none;"></textarea>
+                        </div>
+                        
+                        <div class="d-grid mt-3">
+                            <input type="hidden" name="oculto" value="1">
+                            <input type="submit" class="btn btn-danger clear" value="Limpiar">
+                        </div>
+                   </form>
+               </div> 
+            </div>
+        </div>
+    </div> <!--*.container mt-4-->
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/actions/adminTexts.js" type="module"></script>
+</body>
+</html>
