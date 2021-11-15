@@ -30,15 +30,31 @@ import { getEncryptedTexts } from "../https/http-provider.js";
         }
     }
 
+    function LogOut () {
+        localStorage.removeItem( 'userSession' );
+        location.href = 'login.html';
+    }
+
     document.addEventListener ( 'DOMContentLoaded', () => {
+        const buttonLogOut = document.querySelector( '.button__log-out' );
         const session = storageService.getSession();
         verifySession( session );
 
         validateData();
 
+        showUserName();
+
         containerInfoText.addEventListener( 'click', getText );
         buttonClear.addEventListener( 'click', clearDescription );
+
+        buttonLogOut.addEventListener( 'click', LogOut );
     });
+
+    function showUserName () {
+        const userName = document.querySelector( '.user__name' );
+        
+        userName.innerHTML = informationUserSession.userName;
+    }
 
     async function validateData () {
         const { texts } = await getEncryptedTexts( 1 ); 
