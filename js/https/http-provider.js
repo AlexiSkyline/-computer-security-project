@@ -105,3 +105,17 @@ export const getEncryptedDocuments = async ( id ) => {
         return error.response.data;
     }
 }
+
+export const deleteEncryptedDocument = async ( idDocument, idCreator ) => {
+    const urlDeleteEncryptedDocument = url + `/documents/${ idDocument }`;
+
+    try {
+        const request = await axios.delete( urlDeleteEncryptedDocument, {
+            idCreator
+        });
+
+        return request.data;
+    } catch (error) {
+        return error.response.data;
+    }
+}

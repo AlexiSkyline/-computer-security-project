@@ -137,7 +137,6 @@ import { showAlert } from "./globalFunctions.js";
 
     async function sendRequestDelete( id ) {
         const request = await deleteEncryptedText( id, informationUserSession.id );
-        console.log( id );
         showAlert( request.msg );
     }
 
