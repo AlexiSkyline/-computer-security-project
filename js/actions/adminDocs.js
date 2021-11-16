@@ -5,6 +5,7 @@ import { LogOut, showAlert, showUserName, verifySession } from "./globalFunction
 ( function (){
     let informationUserSession;
     const containerInfoDocument = document.querySelector( '.container__info-document' );
+    const formTextArea = document.querySelector( '.form-text-area' );
     const creatorName = document.querySelector( '.creator__name span' ); 
     const typeAlgorithm = document.querySelector( '.type__algorithm span' );
     const dateCreation = document.querySelector( '.date__creation span' );
@@ -95,18 +96,20 @@ import { LogOut, showAlert, showUserName, verifySession } from "./globalFunction
         typeAlgorithm.innerText = `${ infoDocument.algorithm === 'tripledes' ? 'TripleDes' : 'Rabbit' }`;
         dateCreation.innerText = `${ infoDocument.createdAt.substring( 0, infoDocument.createdAt.indexOf( 'T' ) ) }`;
         
-        console.log( documentoBase64 );
+        let decodificado = window.atob(documentoBase64);
+        formTextArea.value = decodificado;
     }
 
     function clearDescription () {
         creatorName.innerText = '';
         typeAlgorithm.innerText = '';
         dateCreation.innerText = '';
+        formTextArea.value = '';
     }
 
     async function sendRequestDelete( id ) {
         const request = await deleteEncryptedDocument( id, informationUserSession.id );
-        console.log( id );
+        
         showAlert( request.msg );
     }
 

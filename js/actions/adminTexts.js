@@ -34,7 +34,7 @@ import { LogOut, showAlert, showUserName, verifySession } from "./globalFunction
     async function validateData () {
         const { texts } = await getEncryptedTexts( informationUserSession.id ); 
         infoTexts = texts;
-        console.log( texts );
+        
         createHTML ( texts );
     }   
 

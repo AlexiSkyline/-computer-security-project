@@ -73,7 +73,7 @@ export function verifySession ( session, rolNotAllowed ) {
         setTimeout(() =>{
             spinner.style.display       = 'none';
             header.style.display        = 'block';
-            containerMain.style.display = 'block';
+            containerMain.style.display = 'flex';
         }, 1500 );
         return session;
     }
