@@ -1,6 +1,6 @@
 import { crypto, storageService } from "../classes/index.js";
 import { addEncryptedDocument } from "../https/http-provider.js";
-import { activeButtonEmpty, activeButtonSave, disableButtonEmpty, disableButtonSave, showAlert } from "./globalFunctions.js";
+import { activeButtonEmpty, activeButtonEncrypt, activeButtonSave, disableButtonEmpty, disableButtonEncrypt, disableButtonSave, showAlert } from "./globalFunctions.js";
 
 export const dragAndDrop = () => {
     let informationUserSession = storageService.getSession();;
@@ -129,6 +129,7 @@ export const dragAndDrop = () => {
             return
         }
 
+        disableButtonEncrypt( optionDocument );
         convertBase64( files );
     }
 
@@ -158,6 +159,7 @@ export const dragAndDrop = () => {
             bodyFileContainer = null;
             textOutput.value = '';
             disableButtonEmpty( optionDocument );
+            activeButtonEncrypt( optionDocument );
         }
     }
 
@@ -196,5 +198,6 @@ export const dragAndDrop = () => {
         files = null;
         bodyFileContainer.remove();
         bodyFileContainer = null;
+        activeButtonEncrypt( optionDocument );
     }
 }

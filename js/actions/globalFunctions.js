@@ -6,11 +6,15 @@ export function disableButtonSave ( reference ) {
 
 export function disableButtonEmpty ( reference ) {
     let buttonEmpty = reference.querySelector( '.button.empty' );
-
     if( !buttonEmpty ) return;
-    
     buttonEmpty.disabled = true;
     buttonEmpty.classList.add( 'disable' );
+}
+
+export function disableButtonEncrypt ( reference ) {
+    let encryptButton = reference.querySelector( '.button.encrypt' );
+    encryptButton.disabled = true;
+    encryptButton.classList.add( 'disable' );
 }
 
 export function activeButtonSave ( reference ) {
@@ -23,6 +27,12 @@ export function activeButtonEmpty ( reference ) {
     let buttonEmpty = reference.querySelector( '.button.empty' );
     buttonEmpty.disabled = false;
     buttonEmpty.classList.remove( 'disable' );
+}
+
+export function activeButtonEncrypt( reference ) {
+    let encryptButton = reference.querySelector( '.button.encrypt' );
+    encryptButton.disabled = false;
+    encryptButton.classList.remove( 'disable' );
 }
 
 export function emptyInputs ( reference ) {

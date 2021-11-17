@@ -145,6 +145,10 @@ textarea {
     cursor: not-allowed;
     background-color: #ddd;
 }
+.button.encrypt.disable {
+    cursor: not-allowed;
+    background-color: #ddd;
+}
 
 /* Todo: Option Document Section */
 .option__document {

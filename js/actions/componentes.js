@@ -1,7 +1,7 @@
 import { crypto, storageService } from "../classes/index.js";
 import { addEncryptedText } from "../https/http-provider.js";
 import { dragAndDrop } from "./dragAndDrop.js";
-import { activeButtonSave, disableButtonEmpty, disableButtonSave, LogOut, showAlert, showUserName, verifySession } from "./globalFunctions.js";
+import { activeButtonEncrypt, activeButtonSave, disableButtonEmpty, disableButtonEncrypt, disableButtonSave, LogOut, showAlert, showUserName, verifySession } from "./globalFunctions.js";
 
 ( function (){
     let informationUserSession;
@@ -88,6 +88,7 @@ import { activeButtonSave, disableButtonEmpty, disableButtonSave, LogOut, showAl
             return;
         }
 
+        disableButtonEncrypt( optionText );
         textEntry.classList.remove( 'error' );
         optionAlgorithm.classList.remove( 'error' );
         showText( textEntry.value, optionAlgorithm.value );
@@ -135,6 +136,7 @@ import { activeButtonSave, disableButtonEmpty, disableButtonSave, LogOut, showAl
             return showAlert( bodyAlert, optionText );
         }
 
+        activeButtonEncrypt( optionText );
         const { msg } = await addEncryptedText({ encrytedText, algorithm: option,  idCreator: informationUserSession.id });
         showAlert( msg, optionText );
     }
