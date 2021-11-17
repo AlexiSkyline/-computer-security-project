@@ -1,4 +1,4 @@
-### Proyecto seguridad de la información. 📃
+# Proyecto seguridad de la información. 📃
 Es una Aplicación Web que permite el manejo de encripta miento de texto y archivos bajo con ciertos requisitos, el cual va dirigido a atender aquellas necesidades o problemáticas sociales en cuanto resguardo de información. 
 
 ## Herramientas Utilizadas. 🔧
