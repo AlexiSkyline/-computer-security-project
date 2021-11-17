@@ -10,7 +10,8 @@ Es una Aplicación Web que permite el manejo de encripta miento de texto y archi
 |Para encriptar la información se utilizó Crypto-js. | [Documentación de Crypto-js.](https://www.npmjs.com/package/crypto-js")   |
 |Para las alertas se utilizó SweetAlert2.| [Documentación de SweetAlert2.](https://sweetalert2.github.io/")  |
 
-##Algoritmos de encriptación utilizados. 📖
+## Algoritmos de encriptación utilizados. 📖
+
 ### TripleDES.
 TripleDES (Triple Data Encryption Algorithm) es un algoritmo de cifrado simétrico por bloques, basado en un triple cifrado DES. Usa un tamaño de bloque de 64 bits y un paquete de llaves, que consta de tres llaves DES cada una con 56 bits y 48 rondas equivalentes en DES. Se basa también en la red de Feistel.
 [Ver la información completa.](https://www.classicistranieri.com/es/articles/t/r/i/Triple_DES_18f5.html")
